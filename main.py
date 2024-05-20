@@ -8,8 +8,9 @@ import pandas as pd
 import numpy as np
 import random
 import os
+import wandb
 
-
+wandb.login()
 seed = 2610
 random.seed(seed)
 torch.manual_seed(seed)
@@ -19,19 +20,22 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-model_ckpt = os.environ.get('model_ckpt', 'neulab/codebert-c')
-print(f"Your model is using {model_ckpt}")
+model_ckpt = os.environ.get('MODEL_CKPT', 'neulab/codebert-c')
+n_attn_head = int(os.environ.get('N_ATTN_HEAD', 2))
+print('-' * 80)
+print(f"Your model is using {model_ckpt} with {n_attn_head} attention heads")
+print('-' * 80)
 tokenizer = AutoTokenizer.from_pretrained(model_ckpt)
-model = CodeBertModel(model_ckpt)
+model = CodeBertModel(model_ckpt=model_ckpt, n_attn_head=n_attn_head)
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 dts = data_preprocessing(model_ckpt=model_ckpt)
 
 training_arguments = TrainingArguments(output_dir = 'codebertmodel',
                                       evaluation_strategy = 'epoch',
-                                      per_device_train_batch_size = 1,
-                                      per_device_eval_batch_size = 1,
-                                      gradient_accumulation_steps = 12,
-                                      learning_rate = 5e-5,
+                                      per_device_train_batch_size = 8,
+                                      per_device_eval_batch_size = 8,
+                                      gradient_accumulation_steps = 3,
+                                      learning_rate = 2e-5,
                                       num_train_epochs = 3,
                                       warmup_ratio = 0.1,
                                       lr_scheduler_type = 'cosine',
@@ -53,6 +57,11 @@ trainer = Trainer(model=model,
                  )
 
 if __name__ == '__main__':
+
+    wandb.init(project='huggingface', name=f'{model_ckpt}-nhead-{n_attn_head}')
+
     trainer.train()
     check = trainer.predict(dts['test'])
     compute_metrics(check)
+    
+    wandb.finish()

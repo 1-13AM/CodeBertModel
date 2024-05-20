@@ -28,6 +28,7 @@ class CodeBertModel(nn.Module):
                  chunk_size: int = 512, 
                  dim_feedforward: int = 768,
                  padding_idx: int = 0,
+                 n_attn_head: int = 2,
                  model_ckpt: str = 'microsoft/unixcoder-base'
                  ):
         super().__init__()
@@ -40,7 +41,7 @@ class CodeBertModel(nn.Module):
                 
         
         encoder_layer = nn.TransformerEncoderLayer(d_model=embed_dim,
-                                                   nhead=2,
+                                                   nhead=n_attn_head,
                                                    dim_feedforward=dim_feedforward,
                                                    batch_first=False)
         
@@ -52,7 +53,7 @@ class CodeBertModel(nn.Module):
                                                       d_model=embed_dim, 
                                                       padding_idx=padding_idx)
         
-        self.loss_func = nn.CrossEntropyLoss(weight=torch.Tensor([1.0, 3.0]),
+        self.loss_func = nn.CrossEntropyLoss(weight=torch.Tensor([1.0, 2.5]),
                                              label_smoothing=0.2)
         
         self.ffn = nn.Sequential(nn.Dropout(p=0.1),
@@ -122,13 +123,19 @@ class CodeBertModel(nn.Module):
                                .view(num_chunk, B, -1) # (num_chunk, B, self.embedding_model.config.hidden_dim)
                           )
         
+        # embedded_chunks = (self.embedding_model(input_ids = chunked_input_ids,
+        #                                 attention_mask = chunked_attention_mask)['pooler_output'] # (B * num_chunk, self.embedding_model.config.hidden_dim)
+        #                 .view(num_chunk, B, -1) # (num_chunk, B, self.embedding_model.config.hidden_dim)
+        #             )
+        
         embedded_chunks = self.positional_encoding(embedded_chunks)
         
         output = self.transformer_encoder(embedded_chunks, 
                                           src_key_padding_mask = pad_chunk_mask) # (num_chunk, B, self.embedding_model.config.hidden_dim)
         
         logits = self.ffn(output[0])
-        
+        # chunk_mean = torch.mean(embedded_chunks, dim=0) # ()
+        # logits = self.ffn(chunk_mean)
         if labels is not None:
             loss = self.loss_func(logits, labels)
             return {"loss": loss, "logits": logits}

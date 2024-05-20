@@ -1,0 +1,145 @@
+
+
+
+  0%|▏                                                    | 10/2721 [00:05<23:44,  1.90it/s]
+
+
+  1%|▎                                                    | 18/2721 [00:09<22:02,  2.04it/s]
+
+
+
+  1%|▌                                                    | 28/2721 [00:15<27:39,  1.62it/s]
+
+
+
+  1%|▋                                                    | 38/2721 [00:21<24:47,  1.80it/s]
+
+
+
+  2%|▉                                                    | 48/2721 [00:27<25:01,  1.78it/s]
+
+
+
+  2%|█▏                                                   | 58/2721 [00:32<21:13,  2.09it/s]
+
+
+
+
+  3%|█▎                                                   | 70/2721 [00:41<25:53,  1.71it/s]
+
+
+
+  3%|█▌                                                   | 80/2721 [00:47<23:48,  1.85it/s]
+
+
+
+  3%|█▋                                                   | 88/2721 [00:53<31:54,  1.38it/s]
+
+
+
+  4%|█▉                                                   | 99/2721 [00:59<25:54,  1.69it/s]
+
+
+
+  4%|██                                                  | 110/2721 [01:05<23:00,  1.89it/s]
+
+
+
+  4%|██▎                                                 | 120/2721 [01:11<32:11,  1.35it/s]
+
+
+  5%|██▍                                                 | 128/2721 [01:15<20:25,  2.12it/s]
+
+
+
+  5%|██▋                                                 | 139/2721 [01:21<26:16,  1.64it/s]
+
+
+
+  5%|██▊                                                 | 147/2721 [01:27<29:23,  1.46it/s]
+
+
+
+  6%|███                                                 | 158/2721 [01:33<21:25,  1.99it/s]
+
+
+
+  6%|███▏                                                | 169/2721 [01:39<27:23,  1.55it/s]
+
+
+
+  7%|███▍                                                | 182/2721 [01:45<15:36,  2.71it/s]
+
+
+  7%|███▌                                                | 189/2721 [01:49<20:11,  2.09it/s]
+
+
+
+  7%|███▊                                                | 199/2721 [01:55<26:22,  1.59it/s]
+
+
+
+  8%|███▉                                                | 209/2721 [02:01<23:44,  1.76it/s]
+
+
+
+  8%|████▏                                               | 220/2721 [02:07<20:47,  2.01it/s]
+
+
+  8%|████▎                                               | 228/2721 [02:11<21:40,  1.92it/s]
+
+
+
+
+  9%|████▌                                               | 240/2721 [02:19<22:22,  1.85it/s]
+
+
+  9%|████▋                                               | 248/2721 [02:23<25:22,  1.62it/s]
+
+
+
+  9%|████▉                                               | 258/2721 [02:29<28:37,  1.43it/s]
+
+
+
+ 10%|█████▏                                              | 269/2721 [02:35<16:33,  2.47it/s]
+
+
+
+ 10%|█████▎                                              | 280/2721 [02:41<19:25,  2.10it/s]
+ 10%|█████▎                                              | 280/2721 [02:41<19:25,  2.10it/s]Traceback (most recent call last):
+  File "main.py", line 63, in <module>
+    trainer.train()
+  File "/home/grad-min/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1885, in train
+    return inner_training_loop(
+  File "/home/grad-min/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2216, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/grad-min/.local/lib/python3.8/site-packages/transformers/trainer.py", line 3250, in training_step
+    self.accelerator.backward(loss)
+  File "/home/grad-min/.local/lib/python3.8/site-packages/accelerate/accelerator.py", line 2121, in backward
+    self.scaler.scale(loss).backward(**kwargs)
+  File "/home/grad-min/.local/lib/python3.8/site-packages/torch/_tensor.py", line 525, in backward
+    torch.autograd.backward(
+  File "/home/grad-min/.local/lib/python3.8/site-packages/torch/autograd/__init__.py", line 267, in backward
+    _engine_run_backward(
+  File "/home/grad-min/.local/lib/python3.8/site-packages/torch/autograd/graph.py", line 744, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "main.py", line 63, in <module>
+    trainer.train()
+  File "/home/grad-min/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1885, in train
+    return inner_training_loop(
+  File "/home/grad-min/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2216, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs)
+  File "/home/grad-min/.local/lib/python3.8/site-packages/transformers/trainer.py", line 3250, in training_step
+    self.accelerator.backward(loss)
+  File "/home/grad-min/.local/lib/python3.8/site-packages/accelerate/accelerator.py", line 2121, in backward
+    self.scaler.scale(loss).backward(**kwargs)
+  File "/home/grad-min/.local/lib/python3.8/site-packages/torch/_tensor.py", line 525, in backward
+    torch.autograd.backward(
+  File "/home/grad-min/.local/lib/python3.8/site-packages/torch/autograd/__init__.py", line 267, in backward
+    _engine_run_backward(
+  File "/home/grad-min/.local/lib/python3.8/site-packages/torch/autograd/graph.py", line 744, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt

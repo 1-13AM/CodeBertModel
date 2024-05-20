@@ -1,0 +1,168 @@
+{
+    "os": "Linux-5.15.0-1061-azure-x86_64-with-glibc2.29",
+    "python": "3.8.10",
+    "heartbeatAt": "2024-05-20T10:58:56.887669",
+    "startedAt": "2024-05-20T10:58:55.947133",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "main.py",
+    "codePathLocal": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/1-13AM/CodeBertModel.git",
+        "commit": "816f82ff3d7654d9f860daf8cb6662f08fce7511"
+    },
+    "email": null,
+    "root": "/home/grad-min/mycode/CodeBertModel",
+    "host": "vm-a100",
+    "username": "grad-min",
+    "executable": "/usr/bin/python3",
+    "cpu_count": 24,
+    "cpu_count_logical": 24,
+    "cpu_freq": {
+        "current": 2446.6877916666676,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2475.433,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2445.438,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 123.86906433105469,
+            "used": 33.30402374267578
+        }
+    },
+    "gpu": "NVIDIA A100 80GB PCIe",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA A100 80GB PCIe",
+            "memory_total": 85899345920
+        }
+    ],
+    "memory": {
+        "total": 216.21075439453125
+    }
+}
