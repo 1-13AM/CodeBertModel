@@ -53,7 +53,7 @@ class CodeBertModel(nn.Module):
                                                       d_model=embed_dim, 
                                                       padding_idx=padding_idx)
         
-        self.loss_func = nn.CrossEntropyLoss(weight=torch.Tensor([1.0, 2.5]),
+        self.loss_func = nn.CrossEntropyLoss(weight=torch.Tensor([1.0, 3.0]),
                                              label_smoothing=0.2)
         
         self.ffn = nn.Sequential(nn.Dropout(p=0.1),
@@ -118,24 +118,24 @@ class CodeBertModel(nn.Module):
         num_chunk, B, chunk_size = chunked_input_ids.shape
         chunked_input_ids, chunked_attention_mask = chunked_input_ids.contiguous().view(-1, chunk_size), chunked_attention_mask.contiguous().view(-1, self.chunk_size) # (B * num_chunk, chunk_size), (B * num_chunk, chunk_size)
         
-        embedded_chunks = (self.embedding_model(input_ids = chunked_input_ids,
-                                                attention_mask = chunked_attention_mask) # (B * num_chunk, self.embedding_model.config.hidden_dim)
-                               .view(num_chunk, B, -1) # (num_chunk, B, self.embedding_model.config.hidden_dim)
-                          )
-        
         # embedded_chunks = (self.embedding_model(input_ids = chunked_input_ids,
-        #                                 attention_mask = chunked_attention_mask)['pooler_output'] # (B * num_chunk, self.embedding_model.config.hidden_dim)
-        #                 .view(num_chunk, B, -1) # (num_chunk, B, self.embedding_model.config.hidden_dim)
-        #             )
+        #                                         attention_mask = chunked_attention_mask) # (B * num_chunk, self.embedding_model.config.hidden_dim)
+        #                        .view(num_chunk, B, -1) # (num_chunk, B, self.embedding_model.config.hidden_dim)
+        #                   )
         
-        embedded_chunks = self.positional_encoding(embedded_chunks)
+        embedded_chunks = (self.embedding_model(input_ids = chunked_input_ids,
+                                        attention_mask = chunked_attention_mask)['pooler_output'] # (B * num_chunk, self.embedding_model.config.hidden_dim)
+                        .view(num_chunk, B, -1) # (num_chunk, B, self.embedding_model.config.hidden_dim)
+                    )
         
-        output = self.transformer_encoder(embedded_chunks, 
-                                          src_key_padding_mask = pad_chunk_mask) # (num_chunk, B, self.embedding_model.config.hidden_dim)
+        # embedded_chunks = self.positional_encoding(embedded_chunks)
         
-        logits = self.ffn(output[0])
-        # chunk_mean = torch.mean(embedded_chunks, dim=0) # ()
-        # logits = self.ffn(chunk_mean)
+        # output = self.transformer_encoder(embedded_chunks, 
+        #                                   src_key_padding_mask = pad_chunk_mask) # (num_chunk, B, self.embedding_model.config.hidden_dim)
+        
+        # logits = self.ffn(output[0])
+        chunk_mean = torch.mean(embedded_chunks, dim=0) # ()
+        logits = self.ffn(chunk_mean)
         if labels is not None:
             loss = self.loss_func(logits, labels)
             return {"loss": loss, "logits": logits}

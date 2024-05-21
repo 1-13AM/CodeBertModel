@@ -32,9 +32,9 @@ dts = data_preprocessing(model_ckpt=model_ckpt)
 
 training_arguments = TrainingArguments(output_dir = 'codebertmodel',
                                       evaluation_strategy = 'epoch',
-                                      per_device_train_batch_size = 8,
-                                      per_device_eval_batch_size = 8,
-                                      gradient_accumulation_steps = 3,
+                                      per_device_train_batch_size = 1,
+                                      per_device_eval_batch_size = 1,
+                                      gradient_accumulation_steps = 24,
                                       learning_rate = 2e-5,
                                       num_train_epochs = 3,
                                       warmup_ratio = 0.1,
@@ -58,7 +58,7 @@ trainer = Trainer(model=model,
 
 if __name__ == '__main__':
 
-    wandb.init(project='huggingface', name=f'{model_ckpt}-nhead-{n_attn_head}')
+    wandb.init(project='huggingface', entity='ashton_h', name=f'{model_ckpt}-nhead-{n_attn_head}')
 
     trainer.train()
     check = trainer.predict(dts['test'])
